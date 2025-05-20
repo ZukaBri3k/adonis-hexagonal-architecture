@@ -17,4 +17,8 @@ router.get('/', async () => {
   }
 })
 
-router.get('/users/:id', [UsersController, "getUserById"])
+router.get('/users/:id', [UsersController, "show"])
+router.get('/users', [UsersController, "index"])
+router.post('/users', [UsersController, "store"])
+router.put('/users/:id', [UsersController, "update"])
+router.delete('/users/:id', [UsersController, "destroy"])
