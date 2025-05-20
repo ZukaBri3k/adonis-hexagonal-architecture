@@ -2,6 +2,7 @@ export interface UserProps {
   id: number;
   username: string;
   password: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date | null;
 }
@@ -10,6 +11,7 @@ export class User {
   id: number;
   username: string;
   password: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date | null;
 
@@ -17,6 +19,7 @@ export class User {
     this.id = props.id;
     this.username = props.username;
     this.password = props.password;
+    this.email = props.email;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
   }
