@@ -4,7 +4,7 @@ import { UserRepository } from "#domain/ports/user_repository";
 import { CreateUserDTO, UpdateUserDTO } from "#domain/dto/user_dto";
 import { UserMapper } from "#domain/mappers/user_mapper";
 import { UserAlreadyExistsException, UserNotFoundException } from "#domain/exceptions/user_exceptions";
-
+import { Password } from "#domain/valueObjects/password_vo";
 
 
 @inject()
@@ -25,8 +25,9 @@ export class UserService {
   }
 
   async createUser(props: CreateUserDTO): Promise<userContract> {
+    const password = new Password(props.password);
     try {
-      const user = await this.userRepository.create(props);
+      const user = await this.userRepository.create({...props, password: password.getValue()});
       return UserMapper.toContract(user);
     } catch (error) {
       throw new UserAlreadyExistsException(props.username, props.email);
@@ -34,8 +35,15 @@ export class UserService {
   }
 
   async updateUser(id: number, userProps: UpdateUserDTO): Promise<userContract> {
+    let password: string | undefined;
+
+    if (userProps.password) {
+      password = new Password(userProps.password).getValue();
+    }
+    
     try {
-      const user = await this.userRepository.update(id, userProps);
+
+      const user = await this.userRepository.update(id, {...userProps, password});
       return UserMapper.toContract(user);
     } catch (error) {
       throw new UserNotFoundException(id);
