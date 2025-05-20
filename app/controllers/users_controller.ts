@@ -14,7 +14,7 @@ export default class UsersController {
 
   async store({ request }: HttpContext) {
     const { username, password, email } = await request.validateUsing(createUserValidator);
-    return (await this.userService.createUser(username, password, email)).toJson();
+    return (await this.userService.createUser({ username, password, email })).toJson();
   }
 
   async show({ params }: HttpContext) {
