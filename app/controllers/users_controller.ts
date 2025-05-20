@@ -9,24 +9,24 @@ export default class UsersController {
   constructor(private userService: UserService) {}
 
   async index() {
-    return (await this.userService.getAllUsers()).map((user) => user.getUser());
+    return (await this.userService.getAllUsers()).map((user) => user.toJson());
   }
 
   async store({ request }: HttpContext) {
     const { username, password, email } = await request.validateUsing(createUserValidator);
-    return await this.userService.createUser(username, password, email);
+    return (await this.userService.createUser(username, password, email)).toJson();
   }
 
   async show({ params }: HttpContext) {
-    return (await this.userService.getUserById(params.id)).getUser();
+    return (await this.userService.getUserById(params.id)).toJson();
   }
 
   async update({ params, request }: HttpContext) {
     const { username, password, email } = await request.validateUsing(updateUserValidator);
-    return (await this.userService.updateUser(params.id, { username, password, email })).getUser();
+    return (await this.userService.updateUser(params.id, { username, password, email })).toJson();
   }
 
   async destroy({ params }: HttpContext) {
-    return (await this.userService.deleteUser(params.id)).getUser();
+    return (await this.userService.deleteUser(params.id)).toJson();
   }
 }
