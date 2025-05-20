@@ -19,7 +19,7 @@ export class userContract {
     this.updatedAt = userProps.updatedAt;
   }
 
-  getUser() {
+  toJson() {
     return {
       id: this.id,
       username: this.username,
