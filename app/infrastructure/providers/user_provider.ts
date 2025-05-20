@@ -1,5 +1,5 @@
-import { UserRepository } from "#domain/repositories/user_repository";
-import { LucidUserRepository } from "#infrastructure/repositories/lucid_user_repository";
+import { UserRepository } from "#domain/ports/user_repository";
+import { LucidUserRepository } from "#infrastructure/adapters/repositories/lucid_user_repository";
 import app from "@adonisjs/core/services/app";
 
 
