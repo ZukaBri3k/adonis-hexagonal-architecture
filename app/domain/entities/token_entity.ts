@@ -5,7 +5,7 @@ export enum TokenType {
   RESET_PASSWORD = "RESET_PASSWORD",
 }
 
-interface props {
+export interface TokenProps {
   token: string;
   type: TokenType;
   expiresAt: Date;
@@ -18,7 +18,7 @@ export class Token {
   public expiresAt: Date;
   public userId: UserId;
   
-  constructor(props: props){
+  constructor(props: TokenProps){
     this.token = props.token;
     this.type = props.type;
     this.expiresAt = props.expiresAt;

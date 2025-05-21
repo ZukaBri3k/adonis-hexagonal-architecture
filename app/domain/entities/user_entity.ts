@@ -43,8 +43,4 @@ export class User {
   purgeExpiredTokens() {
     this.tokens = this.tokens.filter((token) => token.expiresAt > new Date());
   }
-
-  toContract(): userContract {
-    return UserMapper.toContract(this);
-  }
 }

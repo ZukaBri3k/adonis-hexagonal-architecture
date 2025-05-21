@@ -1,28 +1,18 @@
-interface props {
-    id: string;
-    value: string;
-    type: string;
-    expiresAt: Date;
-}
+import { TokenProps } from "#domain/entities/token_entity";
+import { TokenMapper } from "#domain/mappers/token_mapper";
 
 export class TokenContract {
-    private id: string;
-    private value: string;
-    private type: string;
-    private expiresAt: Date;
-
-    constructor(tokenProps: props) {
-        this.id = tokenProps.id;
-        this.value = tokenProps.value;
-        this.type = tokenProps.type;
-        this.expiresAt = tokenProps.expiresAt;
-    }
+    constructor(private tokenProps: TokenProps) {}
 
     toJson() {
         return {
-            value: this.value,
-            type: this.type,
-            expiresAt: this.expiresAt
+            token: this.tokenProps.token,
+            type: this.tokenProps.type,
+            expiresAt: this.tokenProps.expiresAt
         }
+    }
+
+    toEntity() {
+        return TokenMapper.toDomain(this.tokenProps);
     }
 }

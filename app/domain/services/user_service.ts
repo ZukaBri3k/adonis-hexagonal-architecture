@@ -60,17 +60,17 @@ export class UserService {
     }
   }
 
-  async getUserByEmail(email: string): Promise<User> {
+  async getUserByEmail(email: string): Promise<userContract> {
     try {
-      return this.userRepository.getUserByEmail(email);
+      return UserMapper.toContract(await this.userRepository.getUserByEmail(email));
     } catch {
       throw new UserNotFoundException({email});
     }
   }
 
-  async updatePassword(user: User, newPassword: string): Promise<User> {
+  async updatePassword(user: User, newPassword: string): Promise< userContract> {
     try {
-      return this.userRepository.updatePassword(user, newPassword);
+      return UserMapper.toContract(await this.userRepository.updatePassword(user, newPassword));
     } catch {
       throw new UserNotFoundException({id: user.id});
     }

@@ -59,12 +59,12 @@ export class AuthService {
 
   async sendPasswordReset(email: string): Promise<void> {
     try {
-      const user = await this.userService.getUserByEmail(email);
+      const user = (await this.userService.getUserByEmail(email)).toEntity();
 
       // We don't throw an error if the user doesn't exist beacause we don't want to expose the fact that the user doesn't exist
       if (!user) return;
 
-      const token = await this.tokenService.create(user, TokenType.RESET_PASSWORD);
+      const token = (await this.tokenService.create(user, TokenType.RESET_PASSWORD)).toEntity();
 
       await this.mailRepository.sendPasswordResetEmail(email, token);
     } catch {
@@ -74,7 +74,7 @@ export class AuthService {
 
   async resetPassword(tokenValue: string, newPassword: string): Promise<userContract> {
     try {
-      const token = await this.tokenService.findByToken(tokenValue);
+      const token = (await this.tokenService.findByToken(tokenValue)).toEntity();
       newPassword = new Password(newPassword).getValue();
 
       if (token.type !== TokenType.RESET_PASSWORD) throw new WrongTypeTokenException({token, type: TokenType.RESET_PASSWORD});
@@ -86,7 +86,7 @@ export class AuthService {
 
       await this.tokenService.delete(token.token);
 
-      return newUser.toContract();
+      return newUser;
     } catch {
       throw new FailedResetPasswordException();
     }

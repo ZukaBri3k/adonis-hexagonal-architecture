@@ -8,10 +8,10 @@ export class TokenMapper {
 
     static toContract(data: Token): TokenContract {
         return new TokenContract({
-            id: data.id,
-            value: data.value,
+            token: data.token,
             type: data.type,
-            expiresAt: data.expiresAt
+            expiresAt: data.expiresAt,
+            userId: data.userId
         })
     }
 }
