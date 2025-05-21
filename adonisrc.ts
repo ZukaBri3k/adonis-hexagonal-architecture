@@ -83,6 +83,26 @@ export default defineConfig({
         name: 'functional',
         timeout: 30000,
       },
+      {
+        files: ['tests/domain/services/**/*.spec(.ts|.js)'],
+        name: 'domain/services',
+        timeout: 30000,
+      },
+      {
+        files: ['tests/domain/entities/**/*.spec(.ts|.js)'],
+        name: 'domain/entities',
+        timeout: 30000,
+      },
+      {
+        files: ['tests/domain/mappers/**/*.spec(.ts|.js)'],
+        name: 'domain/mappers',
+        timeout: 30000,
+      },
+      {
+        files: ['tests/domain/valueObjects/**/*.spec(.ts|.js)'],
+        name: 'domain/valueObjects',
+        timeout: 30000,
+      }
     ],
     forceExit: false,
   },
