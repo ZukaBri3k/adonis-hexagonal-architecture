@@ -2,7 +2,7 @@ import { UserProps } from "#domain/entities/user_entity";
 import { UserMapper } from "#domain/mappers/user_mapper";
 
 
-export class userContract {
+export class UserContract {
 
   constructor(private userProps: UserProps) {
 

@@ -3,7 +3,7 @@ import { CreateUserDTO } from "#domain/dto/user_dto";
 import { WrongCredentialsException, NotLoggedInException, FailedResetPasswordException } from "#domain/exceptions/auth_exceptions";
 import { UserMapper } from "#domain/mappers/user_mapper";
 import { AuthRepository } from "#domain/ports/auth_repository";
-import { userContract } from "#infrastructure/adapters/contracts/user_contract";
+import { UserContract } from "#infrastructure/adapters/contracts/user_contract";
 import { inject } from "@adonisjs/core";
 import { UserService } from "./user_service.js";
 import { MailRepository } from "#domain/ports/mail_repository";
@@ -21,7 +21,7 @@ export class AuthService {
     private mailRepository: MailRepository,
     private tokenService: TokenService,) {}
 
-  async login(credentials: LoginDTO): Promise<userContract> {
+  async login(credentials: LoginDTO): Promise<UserContract> {
     try {
       const user = await this.authRepository.login(credentials);
 
@@ -33,7 +33,7 @@ export class AuthService {
     }
   }
 
-  async logout(): Promise<userContract> {
+  async logout(): Promise<UserContract> {
     try {
       const user = await this.authRepository.logout();
 
@@ -45,7 +45,7 @@ export class AuthService {
     }
   }
 
-  async register(props: CreateUserDTO): Promise<userContract> {
+  async register(props: CreateUserDTO): Promise<UserContract> {
     const user = await this.userService.createUser(props);
 
     await this.login({ email: props.email, password: props.password });
@@ -72,7 +72,7 @@ export class AuthService {
     }
   }
 
-  async resetPassword(tokenValue: string, newPassword: string): Promise<userContract> {
+  async resetPassword(tokenValue: string, newPassword: string): Promise<UserContract> {
     try {
       const token = (await this.tokenService.findByToken(tokenValue)).toEntity();
       newPassword = new Password(newPassword).getValue();
