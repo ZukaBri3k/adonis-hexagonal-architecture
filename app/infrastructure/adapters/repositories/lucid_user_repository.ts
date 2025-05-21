@@ -20,7 +20,11 @@ export class LucidUserRepository implements UserRepository {
   }
 
   async create(userProps: CreateUserDTO): Promise<User> {
-    const user = await LucidModelUser.create(userProps);
+    const user = await LucidModelUser.create({
+      ...userProps,
+      email: userProps.email.getValue(),
+      password: userProps.password.getValue(),
+    });
 
     return UserMapper.toDomain(user);
   }
@@ -29,8 +33,8 @@ export class LucidUserRepository implements UserRepository {
     const user = await LucidModelUser.findOrFail(id);
 
     user.username = userProps.username ?? user.username;
-    user.password = userProps.password ?? user.password;
-    user.email = userProps.email ?? user.email;
+    user.password = userProps.password?.getValue() ?? user.password;
+    user.email = userProps.email?.getValue() ?? user.email;
 
     await user.save();
 

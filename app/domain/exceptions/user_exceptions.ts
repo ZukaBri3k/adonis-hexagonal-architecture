@@ -15,4 +15,9 @@ export class PasswordNotStrongEnoughException extends Error {
     super(message);
   }
 }
-  
+
+export class EmailNotValidException extends Error {
+  constructor(email: string) {
+    super(`Email ${email} is not valid`);
+  }
+}
