@@ -44,4 +44,20 @@ export class LucidUserRepository implements UserRepository {
 
     return UserMapper.toDomain(user);
   }
+
+  async getUserByEmail(email: string): Promise<User> {
+    const user = await LucidModelUser.findByOrFail('email', email);
+
+    return UserMapper.toDomain(user);
+  }
+
+  async updatePassword(user: User, newPassword: string): Promise<User> {
+    const userDb = await LucidModelUser.findOrFail(user.id);
+
+    userDb.password = newPassword;
+
+    await userDb.save();
+
+    return UserMapper.toDomain(userDb);
+  }
 }

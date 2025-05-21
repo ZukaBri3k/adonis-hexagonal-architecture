@@ -15,3 +15,9 @@ export const updateUserValidator = vine.compile(
     email: vine.string().trim().email().unique({table: 'users', column: 'email'}).optional(),
   })
 );
+
+export const emailValidator = vine.compile(
+  vine.object({
+    email: vine.string().trim().email(),
+  })
+);

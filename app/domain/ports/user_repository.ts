@@ -8,4 +8,6 @@ export abstract class UserRepository {
   abstract create(user: CreateUserDTO): Promise<User>;
   abstract update(id: number, userProps: UpdateUserDTO): Promise<User>;
   abstract delete(id: number): Promise<User>;
+  abstract getUserByEmail(email: string): Promise<User>;
+  abstract updatePassword(user: User, newPassword: string): Promise<User>;
 }

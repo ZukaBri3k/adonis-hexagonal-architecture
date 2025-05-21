@@ -1,4 +1,5 @@
 import { UserProps } from "#domain/entities/user_entity";
+import { UserMapper } from "#domain/mappers/user_mapper";
 
 
 export class userContract {
@@ -31,5 +32,16 @@ export class userContract {
 
   getPassword() {
     return this.password;
+  }
+
+  toEntity() {
+    return UserMapper.toDomain({
+      id: this.id,
+      username: this.username,
+      password: this.password,
+      email: this.email,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    });
   }
 }

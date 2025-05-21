@@ -1,6 +1,6 @@
 export class UserNotFoundException extends Error {
-  constructor(id: number) {
-    super(`User with id ${id} not found`);
+  constructor(data: Object) {
+    super(`User with id ${JSON.stringify(data)} not found`);
   }
 }
 

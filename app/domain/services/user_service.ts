@@ -5,6 +5,7 @@ import { CreateUserDTO, UpdateUserDTO } from "#domain/dto/user_dto";
 import { UserMapper } from "#domain/mappers/user_mapper";
 import { UserAlreadyExistsException, UserNotFoundException } from "#domain/exceptions/user_exceptions";
 import { Password } from "#domain/valueObjects/password_vo";
+import { User } from "#domain/entities/user_entity";
 
 
 @inject()
@@ -16,7 +17,7 @@ export class UserService {
       const user = await this.userRepository.findById(id);
       return UserMapper.toContract(user);
     } catch (error) {
-      throw new UserNotFoundException(id);
+      throw new UserNotFoundException({id});
     }
   }
 
@@ -46,7 +47,7 @@ export class UserService {
       const user = await this.userRepository.update(id, {...userProps, password});
       return UserMapper.toContract(user);
     } catch (error) {
-      throw new UserNotFoundException(id);
+      throw new UserNotFoundException({id});
     }
   }
 
@@ -55,7 +56,23 @@ export class UserService {
       const user = await this.userRepository.delete(id);
       return UserMapper.toContract(user);
     } catch (error) {
-      throw new UserNotFoundException(id);
+      throw new UserNotFoundException({id});
+    }
+  }
+
+  async getUserByEmail(email: string): Promise<User> {
+    try {
+      return this.userRepository.getUserByEmail(email);
+    } catch {
+      throw new UserNotFoundException({email});
+    }
+  }
+
+  async updatePassword(user: User, newPassword: string): Promise<User> {
+    try {
+      return this.userRepository.updatePassword(user, newPassword);
+    } catch {
+      throw new UserNotFoundException({id: user.id});
     }
   }
 }
