@@ -9,3 +9,10 @@ export class UserAlreadyExistsException extends Error {
     super(`User with username ${username} or mail ${mail} already exists`);
   }
 }
+
+export class PasswordNotStrongEnoughException extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+  
