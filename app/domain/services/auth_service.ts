@@ -48,7 +48,7 @@ export class AuthService {
   async register(props: CreateUserDTO): Promise<UserContract> {
     const user = await this.userService.createUser(props);
 
-    await this.login({ email: props.email, password: props.password });
+    await this.login({ email: props.email.getValue(), password: props.password.getValue() });
 
     return user;
   }
