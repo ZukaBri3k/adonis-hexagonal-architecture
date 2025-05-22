@@ -1,0 +1,6 @@
+{
+  "all": true,
+  "include": ["app/**/*.js", "app/**/*.ts"],
+  "exclude": ["**/*.d.ts", "**/test/**", "**/tests/**", "app/middleware/*.ts", "app/exceptions/handler.ts"],
+  "reporter": ["text", "html", "lcov"]
+}
